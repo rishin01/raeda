@@ -98,7 +98,6 @@ body {
   color: rgb(73, 73, 73);
 }
 
-
 input:focus{
 	outline: none;
 }
@@ -116,4 +115,13 @@ img {
 	max-width: 500px;
 	margin:0;
 	animation: 1.5s ease slideInFromLeft;
+}
+
+#requesttaxi {
+	pointer-events: none;
+	opacity:0.3;
+}
+#requesttaxi.inputsentered {
+	pointer-events: auto;
+	opacity:1;
 }

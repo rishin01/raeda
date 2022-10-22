@@ -2,32 +2,69 @@
 const locationbutton = $('#locationbutton');
 const destinationbutton = $('#destinationbutton');
 
-const locationinput = $('#locationinput');
-const destinationinput = $('#destinationinput');
+const locationinputdiv = $('#locationinput');
+const destinationinputdiv = $('#destinationinput');
+
+const locationinput = $('#locationinput input');
+const destinationinput = $('#destinationinput input');
+
+const requesttaxi = $('#requesttaxi')
 
 locationbutton.click(function(){
 	locationbutton.css('display','none');
-	locationinput.css('display','flex');
+	locationinputdiv.css('display','flex');
 });
 
 destinationbutton.click(function(){
 	destinationbutton.css('display','none');
-	destinationinput.css('display','flex');
+	destinationinputdiv.css('display','flex');
 });
 
 var fromInput = '';
 var toInput = '';
 
-locationinput.on("input", function() {
-   fromInput = $(this).val(); 
-	if (toInput!='' && fromInput!=''){
-	
-	}
+function ofLocationFormat(s){
+	return s.length == 5 && parseInt(s[1])!=undefined && parseInt(s[3])!=undefined;
+}
+
+function checkValidInputs(){
+	if (ofLocationFormat(toInput) && ofLocationFormat(fromInput)) 	requesttaxi.addClass('inputsentered');
+}
+
+locationinput.on('input',function() {
+	fromInput = $(this).val(); 
+	checkValidInputs();
+});
+locationinput.keypress(function(e) {
+	if (e.which == 13) locationinput.blur();
 });
 
-destinationinput.on("input", function() {
-   toInput = $(this).val();
-   if (toInput!='' && fromInput!=''){
-	   
-   }
+locationinput.focusin(function(){
+ 	locationinputdiv.css('opacity','1');
 });
+locationinput.focusout(function(){
+	if (ofLocationFormat(fromInput)) locationinputdiv.css('opacity','0.6');
+});
+
+destinationinput.on('input',function() {
+	toInput = $(this).val();
+	checkValidInputs();
+});
+destinationinput.keypress(function(e) {
+	if (e.which == 13) destinationinput.blur();
+});
+
+destinationinput.focusin(function(){
+	destinationinputdiv.css('opacity','1');
+});
+destinationinput.focusout(function(){
+	if (ofLocationFormat(toInput)) destinationinputdiv.css('opacity','0.6');
+});
+
+requesttaxi.click(function(){
+	$.ajax('/api/requesttaxi', {
+		data : JSON.stringify({'from':fromInput,'to':toInput}),
+		contentType : 'application/json',
+		type : 'POST',
+	});
+})
