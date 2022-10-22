@@ -24,7 +24,7 @@ body {
 	padding: 40px;
 }
 
-#title a {
+#title a, #title h2 {
 	/* Fallback: Set a background color. */
 	background-color: #f3d577;
 	
@@ -43,10 +43,16 @@ body {
 	-moz-text-fill-color: transparent;
 }
 
+#title h2 {
+	font-size: 30px;
+}
+
 .main_button {
+	cursor: pointer;
 	position: relative;
 	height: 50px;
 	width: 80%;
+	max-width: 350px;
 	margin: 20px auto;
 	background: linear-gradient(45deg, #f3d577, #bc4c4e);
 	border-radius: 4px;
@@ -67,6 +73,7 @@ body {
 	position: relative;
 	height: 50px;
 	width: 80%;
+	max-width: 350px;
 	margin: 20px auto;
 	background: linear-gradient(45deg, #f3d577, #bc4c4e);
 	border-radius: 4px;
@@ -104,16 +111,18 @@ input:focus{
 
 @keyframes slideInFromLeft {
   0% {
-	transform: translateX(-100%);
+	transform: translateX(-150%);
   }
   100% {
-	transform: translateX(0%);
+	transform: translateX(-50%);
   }
 }
 
-img {
-	max-width: 500px;
+img#logo {
+	max-width: 350px;
 	margin:0;
+	margin-left: 50%;
+	transform: translateX(-50%);
 	animation: 1.5s ease slideInFromLeft;
 }
 
@@ -122,6 +131,15 @@ img {
 	opacity:0.3;
 }
 #requesttaxi.inputsentered {
+	pointer-events: auto;
+	opacity:1;
+}
+
+#inittaxi {
+	pointer-events: none;
+	opacity:0.3;
+}
+#inittaxi.inputsentered {
 	pointer-events: auto;
 	opacity:1;
 }

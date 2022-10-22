@@ -62,9 +62,14 @@ destinationinput.focusout(function(){
 });
 
 requesttaxi.click(function(){
-	$.ajax('/api/requesttaxi', {
-		data : JSON.stringify({'from':fromInput,'to':toInput}),
-		contentType : 'application/json',
-		type : 'POST',
+	fetch('/api/requesttaxi',{
+		method: 'POST',
+		headers: {
+			'Content-Type':'application/json',
+		},
+		body: JSON.stringify({
+			from:fromInput,
+			to:toInput
+		}),
 	});
 })

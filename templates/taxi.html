@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block scripts %}
+	{{super()}}
+	<script src="js/taximain.js" defer></script>
+{% endblock %}
+
+{% block main_content %}
+	<img id="logo" src="assets/raeda_logo.svg" alt="logo">
+	<div id="title">
+		<h2>taxi driver hub</h2>
+	</div>
+	<div id="flatratebutton" class="main_button">
+		<h2>flat rate</h2>
+	</div>
+	<div id="flatrateinput" class="main_input">
+		<h2>base:</h2><input type="text" placeholder="1">
+	</div>
+	<div id="priceminbutton" class="main_button">
+		<h2>price / min</h2>
+	</div>
+	<div id="pricemininput" class="main_input">
+		<h2>price:</h2><input type="text" placeholder="1">
+	</div>
+	<div id="inittaxi" class="main_button">
+		<h2>init taxi!</h2>
+	</div>
+{% endblock %}

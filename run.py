@@ -8,7 +8,7 @@
     - go to http://localhost:5000
 """
 
-
+import json
 from flask import Flask, render_template, jsonify, request
 # from flask_ngrok import run_with_ngrok
 
@@ -20,14 +20,24 @@ def index():
 	data = {}
 	return render_template('index.html',data=data)
 
+@app.route('/taxi')
+def taxi():
+  data = {}
+  return render_template('taxi.html',data=data)
+
 @app.route('/api/requesttaxi', methods=['POST'])
 def requesttaxi():
-  data = {
-    'from': request.args.get('from', default = '(0,0)', type = str),
-    'to': request.args.get('to', default = '(4,4)', type = str),
-  }
+  data = json.loads(request.data)
   print(data['from'])
   print(data['to'])
+  # caitlin to do stuff
+  return data
+
+@app.route('/api/inittaxi', methods=['POST'])
+def inittaxi():
+  data = json.loads(request.data)
+  print(data['flatrate'])
+  print(data['pricemin'])
   # caitlin to do stuff
   return data
     
