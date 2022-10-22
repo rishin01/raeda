@@ -3,6 +3,10 @@ from brookie.scripts.blockchain_interaction import *
 passenger_destination = (0,0)
 passenger_loc = (1,1)
 
+passenger_data = requesttaxi()
+passenger_loc = passenger_data['from']
+passenger_destination = passenger_data['to']
+
 cars = pd.DataFrame(data=[[0,1,2,1,1],[2,4,1,2,0],[1,0,1,2,1]],
                     index=['car1','car2','car3'],
                     columns=['X location', 'Y location', 'Base Price', 'Price/min', 'Available'])
