@@ -20,5 +20,16 @@ def index():
 	data = {}
 	return render_template('index.html',data=data)
 
+@app.route('/api/requesttaxi', methods=['POST'])
+def requesttaxi():
+  data = {
+    'from': request.args.get('from', default = '(0,0)', type = str),
+    'to': request.args.get('to', default = '(4,4)', type = str),
+  }
+  print(data['from'])
+  print(data['to'])
+  # caitlin to do stuff
+  return data
+    
 if __name__ == "__main__":
 	app.run()
