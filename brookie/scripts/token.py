@@ -9,4 +9,4 @@ def main():
 
    
 
-    return Token.deploy("Test Token", "TST", 18, 1e21, {'from': acct})
+    return Token.deploy("SC", "TST", 18, 1e21, {'from': acct})

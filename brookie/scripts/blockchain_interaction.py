@@ -2,6 +2,7 @@
 from brownie import *
 
 
+
 SC = Contract(<number>) # do we need abi here too? ABI is just a 'list' thing of functions and events
 
 accounts.add('9fa44b230cadfd815b7d566708f3b2a2753ece818d0f94ef0caff79e75e68fab')
@@ -19,9 +20,9 @@ def readTaxi():
 def add_taxi(taxi_info):
     SC.add_taxi(*taxi_info)
 
-def send_request_data(car_id):
+def pair(car_id):
     receipt = SC.pair(car_id)
-    paired_data = SC.Paired() #this might not work
+    paired = SC.Paired() #this might not work
     check_my_wallet = receipt.internal_transfers[0]['from']
 
 def passenger_update_taxi_location(taxiid, x, y):
@@ -32,4 +33,3 @@ def passenger_update_taxi_location(taxiid, x, y):
 
 
 #add_taxi, pair, passenger_update_taxi_location , taxi_owner_update_details , exit_taxi
-
