@@ -2,18 +2,27 @@
 
 {% block scripts %}
 	{{super()}}
-	<script src="{{url_for('static', filename='js/home-script.js')}}" defer></script>
+	<script src="js/main.js" defer></script>
 {% endblock %}
 
 {% block main_content %}
-	<img src="assets/raeda_logo.svg" alt="logo">
+	<img id="logo" src="assets/raeda_logo.svg" alt="logo">
 	<div id="title">
 		<a href="http://raeda.app">raeda.app</a>
 	</div>
-	<div id="pickup-location" class="main_button">
-		<h2>pickup location</h2>
+	<div id="locationbutton" class="main_button">
+		<h2>where u at?</h2>
 	</div>
-	<div id="destination" class="main_button">
+	<div id="locationinput" class="main_input">
+		<h2>from:</h2><input placeholder="A1">
+	</div>
+	<div id="destinationbutton" class="main_button">
 		<h2>where u going?</h2>
+	</div>
+	<div id="destinationinput" class="main_input">
+		<h2>to:</h2><input placeholder="D4">
+	</div>
+	<div id="requesttaxi" class="main_button">
+		<h2>requesttaxi</h2>
 	</div>
 {% endblock %}

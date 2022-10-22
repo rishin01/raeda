@@ -31,13 +31,13 @@ contract TaxiContract {
 		taxi_num = 0;
 	}
 
-	function check_taxi_exists(uint taxiid){
+	function check_taxi_exists(uint taxiid) public{
 		if (taxiIdData[taxiid]._isDeleted) {
 			return false;
 		}
 	}
 
-	function add_taxi(uint x, uint y, uint base_price, uint price_min) {
+	function add_taxi(uint x, uint y, uint base_price, uint price_min) public {
 		taxiAddressIds[msg.sender] = current_taxi_id;
 		taxiIdData.push(current_taxi_id);
 		taxiIdData[current_taxi_id].loc = Location({x:x,y:y});
@@ -50,7 +50,7 @@ contract TaxiContract {
 		emit Available(taxiAddressIds[msg.sender],x,y,base_price,price_min);
 	}
 
-	function pair(uint taxiid) {
+	function pair(uint taxiid) public {
 		check_taxi_exists(taxiid);
 		if (taxiIdData[taxiid].available) {
 			taxiIdData[taxiid].available = false;
@@ -58,24 +58,24 @@ contract TaxiContract {
 		}
 	}
 
-	function passenger_update_taxi_location(uint taxiid, uint x, uint y){
+	function passenger_update_taxi_location(uint taxiid, uint x, uint y) public {
 		check_taxi_exists(taxiid);
 		taxiIdData[taxiid].loc.x = x;
 		taxiIdData[taxiid].loc.y = y;
 	}
 
-	function taxi_owner_update_details(uint base_price, uint price_min){
+	function taxi_owner_update_details(uint base_price, uint price_min) public {
 		check_taxi_exists(taxiIdData[taxiAddressIds[msg.sender]]);
 		taxiIdData[taxiAddressIds[msg.sender]].base_price = base_price;
 		taxiIdData[taxiAddressIds[msg.sender]].price_min = price_min;
 	}
 
-	function taxi_received_payement(address passengerAddress){
+	function taxi_received_payement(address passengerAddress) public {
 		check_taxi_exists(taxiAddressIds[msg.sender]);
 		emit StartJourney(passengerAddress,taxiAddressIds[msg.sender]);
 	}
 
-	function passenger_exit_taxi(uint taxiid, uint x, uint y){
+	function passenger_exit_taxi(uint taxiid, uint x, uint y) public {
 		check_taxi_exists(taxiid);
 		passenger_update_taxi_location(taxiid,x,y);
 		taxiIdData[taxiid].available = true;
@@ -88,7 +88,7 @@ contract TaxiContract {
 		);
 	}
 
-	function remove_taxi(){
+	function remove_taxi() public {
 		check_taxi_exists(taxiid);
 		taxi_id_to_remove = taxiAddressIds[msg.sender];
 		taxiIdData[taxi_id_to_remove]._isDeleted = true;
