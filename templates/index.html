@@ -6,109 +6,14 @@
 {% endblock %}
 
 {% block main_content %}
-	<div>yoo main content here</div>
-{% endblock %}
-
-{% block sub_pages %}
-	<div id="about" class="sub-content-inner">
-		<h2>about the project.</h2>
-		<p class="desc" style="margin-bottom: 0;">Hi, this is Toby Loader, known on the web as TobiasCodes. A bit of background on myself, I'm a student at the University of Oxford reading Maths and CS and love writing code and coming up with fun little projects to work on.<br><br>Having done lots of frontend dev over the years I've often needed to find colour schemes for my projects. But I never found an online tool that suited my needs whilst still being easy and fun to use. So I've built myself this little helper and hope it will be of use to some people.<br><br>If you would like to watch a video of me building the web app you can check out my youtube channel TobiasCodes :)<br><br>If you would like to get in touch you can drop me an email at <a href="mailto:toby@colourblender.io">toby@colourblender.io</a>, and if you would like to give a little tip you can check out the coffee page. Thanks!</p>
+	<img src="assets/raeda_logo.svg" alt="logo">
+	<div id="title">
+		<a href="http://raeda.app">raeda.app</a>
 	</div>
-	<div id="showcss" class="sub-content-inner">
-		<h2>show colour css.</h2>
-		<p class="desc">Below is the css for the colour you've selected. This is a linear interpolation (lerp) of the left and right colours, at the percentage 'split'%. So 0% would represent all of the left colour and none of the right, whilst 100% would be none of the left and all of the right.<br><br>Use the toggle in the top right of the window to switch between hex and rgb colour encodings.</p>
-		<div id="css-colour" class="code-snippet">
-			<div class='code-css-container'><p class='code-css'></p></div>
-			<div id="copy-css-btn" class="copy-img-container">
-				<div class="copy-clipboard-btn tooltip tooltip-down">
-					<img class="code-copy-img" alt="copy to clipboard icon" src="{{url_for('static', filename='assets/light-clipboard-copy.svg')}}">
-					<span class="tooltiptext"><span>Copy to Clipboard</span></span>
-				</div>
-			</div>
-		</div>
+	<div id="pickup-location" class="main_button">
+		<h2>pickup location</h2>
 	</div>
-	<div id="gradient" class="sub-content-inner">
-		<h2>show gradient css.</h2>
-		<p class="desc">Here is the css for recreating the linear gradient in the background of this page, in case you would like to use it on your own site. 94% of users' browsers support the modern standard below.</p>
-		<div id="modern-gradient" class="code-snippet">
-			<div class='code-css-container'><p class='code-css'></p></div>
-			<div id="copy-gradient-btn" class="copy-img-container">
-				<div class="copy-clipboard-btn tooltip tooltip-down">
-					<img class="code-copy-img" alt="copy to clipboard icon" src="{{url_for('static', filename='assets/light-clipboard-copy.svg')}}">
-					<span class="tooltiptext"><span>Copy to Clipboard</span></span>
-				</div>
-			</div>
-		</div>
-		<p class="desc compatability">Compatability: IE 10+, Edge, Firefox 16+, Chrome 26+, Safari 6.1+, Opera 12+, iOS Safari 7.1+, Android Browser 4.4+, Chrome for Android 46+</p>
-		<div class="seperating-line-container">
-			<div class="seperating-line"></div>
-		</div>
-		<p class="desc">However for maximum compatibility you can instead use the following css. As always you can switch between hex and rgb encodings using the toggle in the top right of the window.</p>
-		<div id="max-comp-gradient" class="code-snippet">
-			<div class='code-css-container'><p class='code-css'></p></div>
-			<div id="copy-gradient-max-comp-btn" class="copy-img-container">
-				<div class="copy-clipboard-btn tooltip tooltip-down">
-					<img class="code-copy-img" alt="copy to clipboard icon" src="{{url_for('static', filename='assets/light-clipboard-copy.svg')}}">
-					<span class="tooltiptext"><span>Copy to Clipboard</span></span>
-				</div>
-			</div>
-		</div>
-		<p class="desc compatability" style="margin-bottom: 0;">Compatability: IE 6+, Edge, Firefox 3.6+, Chrome 10+, Safari 5.1+, Opera 12+, iOS Safari 5.1+, Android Browser 4+, Chrome for Android 46+</p>
+	<div id="destination" class="main_button">
+		<h2>where u going?</h2>
 	</div>
-	<div id="privacy" class="sub-content-inner">
-		<h2>privacy policy for cookies.</h2>
-		<p class="desc" style="margin-bottom: 0;">I'm collecting some basic usage info (with google analytics) so I can see how much the site is being used and know which of my projects to prioritise.<br><br>Trust me I don't like sites collecting data about me and tbh I actually make a point of rejecting cookies on most sites if i can :) but these basic cookies really help me out alot.<br><br>Also I only store cookies temporarily, they expire after 1 day.</p>
-		<div class="cookies-table-container">
-			<h3>Optional Cookies</h3>
-			<table class="cookie-table">
-				<thead>
-					<tr>
-						<th scope="col">Cookie Name</th>
-						<th scope="col">Set By</th>
-						<th scope="col">Description</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>users_cookie_choice</td>
-						<td>ColourBlender.io</td>
-						<td class="cookie-table-desc">We store this cookie if you click to say you accept cookies. It then removes the cookie notice from the website.</td>
-					</tr>
-					<tr>
-						<td>_ga</td>
-						<td>Google Analytics</td>
-						<td class="cookie-table-desc">We use Google's 'Universal Analytics' system to allow us to analyse the traffic to our site and to review a number of statistics regarding our visitors. <a href="http://www.google.co.uk/intl/en/analytics/privacyoverview.html">Read about Google Analytic's privacy policy</a></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="cookies-table-container">
-			<h3>Essential Cookies<span style="opacity:0.5;"> - only if visit "coffee?" page</span></h3>
-			<table class="cookie-table">
-				<thead>
-					<tr>
-						<th scope="col">Cookie Name</th>
-						<th scope="col">Set By</th>
-						<th scope="col">Description</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>stripe.csrf, cid, locale, __stripe_orig_props, site-auth, __stripe_mid, private_machine_identifier, machine_identifier</td>
-						<td>Stripe.com</td>
-						<td class="cookie-table-desc">These cookies are only installed when you visit the "coffee?" (donate) page. These cookies are strictly necessary for that page as it enables the Stripe payment system to function. Stripe is a payment processing service that processes all tips on our site. These are thrid party cookies installed by Stripe that I cannot customise. <a href="https://stripe.com/gb/privacy">Read about Stripe's privacy policy.</a></td>
-					</tr>
-					<tr>
-						<td>SOCS, __Secure-ENID, CONSENT, AEC, NID</td>
-						<td>Google.com</td>
-						<td class="cookie-table-desc">These cookies are only installed when you visit the "coffee?" (donate) page. These cookies are strictly necessary for that page as it enables Google Pay to function through Stripe (Google installs these through Stripe api even if your device does not support Google Pay, sorry). <a href="https://policies.google.com/privacy">Read about Google's privacy policy.</a></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-{% endblock %}
-
-{% block cookies %}
-	{% include "cookies.html" %}
 {% endblock %}
