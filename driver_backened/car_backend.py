@@ -2,6 +2,7 @@ import pandas as pd
 from brookie.scripts.blockchain_interaction import *
 
 # This will eventually be the taxi front end pressing a button to say available
+# need to randomly set starting location, and will receive pricing info, and available should always be made 1
 taxi_info = pd.Series(data=[1,2,3,4,1],
                       index=['X location', 'Y location', 'Flat Rate', 'Price/min', 'Available'],
                       name='car4'
