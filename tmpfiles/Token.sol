@@ -13,7 +13,7 @@ contract Token {
 		uint base_price;
 		uint price_min;
 		bool available;
-		bool _isDeleted;
+		bool _isAlive;
 	}
 
 	mapping(address => uint) taxiAddressIds;
@@ -26,6 +26,7 @@ contract Token {
 
 	uint current_taxi_id;
 	uint taxi_num;
+	uint available_num;
 
 	constructor() public {
 		current_taxi_id = 0;
@@ -35,7 +36,7 @@ contract Token {
 
 
 	function check_taxi_exists(uint taxiid) public{
-		if (taxiIdData[taxiid]._isDeleted) {
+		if (taxiIdData[taxiid]._isAlive) {
 			// 'i know its deleted lol but not gonna do anything about it'
 		}
 	}
@@ -50,9 +51,11 @@ contract Token {
 		newdata.base_price = base_price;
 		newdata.price_min = price_min;
 		newdata.available = true;
+		newdata._isAlive = true;
 		taxiIdData[current_taxi_id] = newdata;
 		current_taxi_id += 1;
 		taxi_num += 1;
+		available_num +=1;
 
 		//emit TaxiId(taxiAddressIds[msg.sender]);
 		//emit Available(taxiAddressIds[msg.sender],x,y,base_price,price_min);
@@ -64,6 +67,7 @@ contract Token {
 			taxiIdData[taxiid].available = false;
 			emit Paired(msg.sender,taxiid);
 		}
+		available_num -=1;
 	}
 
 	function passenger_update_taxi_location(uint taxiid, uint x, uint y) public {
@@ -73,56 +77,111 @@ contract Token {
 	}
 
 
-	function check_available_taxi_addresses() public view returns (address[] memory) {
-		address[] memory listavailable;
-		uint j;
-		j = 0;
-		for(uint i=0; i < current_taxi_id; i++){
-			if (taxiIdData[i]._isDeleted){
-				if (taxiIdData[i].available) {
-					listavailable[j]=taxiIdData[i].taxi_address;
-					j += 1;
-				}
+	function check_available_taxi_addresses(uint i) public view returns (address) {
+		address address_output;
+
+
+		if (taxiIdData[i]._isAlive){
+			if (taxiIdData[i].available) {
+				address_output=taxiIdData[i].taxi_address;
+
 			}
 		}
-		return listavailable;
+
+		return address_output;
 	}
 
-	function check_available_taxi_ints() public view returns (uint[] memory) {
-		uint[] memory listavailable;
-		uint j;
-		j = 0;
-		for(uint i=0; i < current_taxi_id; i++){
-			if (taxiIdData[i]._isDeleted){
-				if (taxiIdData[i].available) {
-					listavailable[j]=taxiIdData[i].x;
-					listavailable[j+1]=taxiIdData[i].y;
-					listavailable[j+2]=taxiIdData[i].base_price;
-					listavailable[j+3]=taxiIdData[i].price_min;
-					j += 4;
-				}
+	function check_available_taxi_x(uint i) public view returns (uint) {
+		uint integer_output;
+
+		if (taxiIdData[i]._isAlive){
+			if (taxiIdData[i].available) {
+				integer_output = taxiIdData[i].x;
 			}
 		}
-		return listavailable;
+		return integer_output;
 	}
 
-	function check_available_taxi_booleans() public view returns (bool[] memory) {
-		bool[] memory listavailable;
-		uint j;
-		j = 0;
-		for(uint i=0; i < current_taxi_id; i++){
-			if (taxiIdData[i]._isDeleted){
-				if (taxiIdData[i].available) {
-					listavailable[j]=taxiIdData[i].available;
-					listavailable[j+1]=taxiIdData[i]._isDeleted;
-					j+=2;
-				}
+	function check_available_taxi_y(uint i) public view returns (uint) {
+		uint integer_output;
+
+		if (taxiIdData[i]._isAlive){
+			if (taxiIdData[i].available) {
+				integer_output = taxiIdData[i].y;
 			}
 		}
-		return listavailable;
+		return integer_output;
+	}
+	function check_available_taxi_price_min(uint i) public view returns (uint) {
+		uint integer_output;
+
+		if (taxiIdData[i]._isAlive){
+			if (taxiIdData[i].available) {
+				integer_output = taxiIdData[i].price_min;
+			}
+		}
+		return integer_output;
+	}
+	function check_available_taxi_base_price(uint i) public view returns (uint) {
+		uint integer_output;
+
+		if (taxiIdData[i]._isAlive){
+			if (taxiIdData[i].available) {
+				integer_output = taxiIdData[i].base_price;
+			}
+		}
+		return integer_output;
 	}
 
 
+//	function check_available_taxi_ints(uint i, string memory wanted_variable) public view returns (uint) {
+//		uint integer_output;
+//		if (taxiIdData[i]._isAlive){
+//			if (taxiIdData[i].available) {
+//				if (wanted_variable == 'x'){
+//					integer_output = taxiIdData[i].x;
+//
+//				}
+//				else if (wanted_variable == 'y'){
+//					integer_output = taxiIdData[i].y;
+//				}
+//				else if (wanted_variable == 'base_price'){
+//					integer_output = taxiIdData[i].base_price;
+//				}
+//				else if (wanted_variable == 'y'){
+//					integer_output = taxiIdData[i].price_min;
+//				}
+//			}
+//		}
+//
+	//	return integer_output;
+	//}
+
+//	function check_available_taxi_booleans(uint i, string memory wanted_variable) public view returns (bool) {
+//		bool boolean_output;
+//
+//		if (taxiIdData[i]._isAlive){
+//			if (taxiIdData[i].available) {
+//				if (wanted_variable == 'available'){
+//					boolean_output = taxiIdData[i].available;
+//				}
+//				else if (wanted_variable == 'isAlive'){
+//					boolean_output = taxiIdData._isAlive;
+//				}
+//			}
+//		}
+//
+//		return boolean_output;
+//	}
+
+
+	function check_number_taxis() public view returns (uint) {
+		return taxi_num;
+	}
+
+	function check_number_available() public view returns (uint) {
+		return available_num;
+	}
 
 	function taxi_owner_update_details(uint base_price, uint price_min) public {
 		// check_taxi_exists(taxiIdData[taxiAddressIds[msg.sender]]);
@@ -152,7 +211,7 @@ contract Token {
 	function remove_taxi() public {
 		uint taxi_id_to_remove = taxiAddressIds[msg.sender];
 		check_taxi_exists(taxi_id_to_remove);
-		taxiIdData[taxi_id_to_remove]._isDeleted = true;
+		taxiIdData[taxi_id_to_remove]._isAlive = true;
 		taxi_num -= 1;
 		delete taxiAddressIds[msg.sender];
 	}
