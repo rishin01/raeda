@@ -4,7 +4,7 @@ import taxidata.py
 
 class Match:
     
-    def __init__():
+    def __init__(data):
         self.passenger_loc = (int(data['from'][1]),int(data['from'][3]))
         self.passenger_dest = (int(data['to'][1]),int(data['to'][3]))
         self.cars_data = listofalltaxidata()
@@ -48,6 +48,6 @@ class Match:
 to do:
 return the addresses list
 journey cost
-estimated journey
+estimated journey time
 estimated time until pickup
 '''
