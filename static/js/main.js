@@ -1,4 +1,3 @@
-
 const locationbutton = $('#locationbutton');
 const destinationbutton = $('#destinationbutton');
 

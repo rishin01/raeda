@@ -2,6 +2,7 @@ import pandas as pd
 import taxidata
 from blondie.token.scripts.blockchain_interaction import *
 import numpy as np
+from random import randint
 
 class Match:
     
@@ -22,7 +23,7 @@ class Match:
         return self.cars.loc[self.cars.Available==1]
 
     def match(self):
-        '''
+#         '''
 #         Returns the (taxicab) distance of the passenger from each car in cars.
 #         passenger = tuple representing the passenger location
 #         cars = dataframe
@@ -30,25 +31,29 @@ class Match:
 #         Distance metric can be altered to factor in road network type, driver costs.
 #         '''
 # 
-#           
-        match = self.cars.iloc[-1,:]
+# 
 #         if len(self.cars)==0:
 #             return None
 #         else:
-#             change_in_loc = self.cars.loc[:,['X location','Y location']] - self.passenger_loc
-#             distances = pd.DataFrame(
-#                 data=[self.cars.Id.values,change_in_loc.abs().sum(1)],
-#                 index=self.cars.index,
-#                 columns=['Id','Distance']
-#             )
-#             match = distances.loc[distances.Distance==distances.Distance.min()]
-#             if len(match)>1: # If there are multiple matches, we select one randomly.
-#                 match = match.sample(n=1)
-        pair(match.loc['Id'], self.passenger_loc[0], self.passenger_loc[1], self.passenger_dest[0], self.passenger_dest[1])
-#             else:
-#                 pair(match.loc['Id'], self.passenger_loc[0], self.passenger_loc[1], self.passenger_dest[0], self.passenger_dest[1])
-#         car_name = match.index[0]
-#         time_until_pickup = match.Distance
-#         journey_time = sum(self.passenger_dest - self.passenger_loc)
-#         return match.loc['Id'],  car_name, time_until_pickup, journey_time
-    
+#             # change_in_loc = self.cars.loc[:,['X location','Y location']] - self.passenger_loc
+#             # distances = pd.DataFrame(
+#             #     data=[self.cars.Id.values,change_in_loc.abs().sum(1)],
+#             #     index=self.cars.index,
+#             #     columns=['Id','Distance']
+#             # )
+#             # match = distances.loc[distances.Distance==distances.Distance.min()]
+#             # if len(match)>1: # If there are multiple matches, we select one randomly.
+#             #     match = match.sample(n=1)
+#             #     pair(match.values[0][0], self.passenger_loc[0], self.passenger_loc[1], self.passenger_dest[0], self.passenger_dest[1])
+#             # else:
+#             #     pair(match.values[0][0], self.passenger_loc[0], self.passenger_loc[1], self.passenger_dest[0], self.passenger_dest[1])
+#             match = match.sample(n=1)
+#             pair(match.values[0][0], self.passenger_loc[0], self.passenger_loc[1], self.passenger_dest[0], self.passenger_dest[1])
+#         car_id = match.index[0]
+#         time_until_pickup = match.Distance[0]
+#         journey_time = 4
+#         
+        slice = self.cars_data[randint(0, len(self.cars))]
+        pair(slice[0],slice[1],slice[2],slice[3],slice[4])
+        
+        return slice[0], 'Bob', 1, 2

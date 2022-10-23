@@ -19,7 +19,7 @@ from driver_backened.car_backend import taximain, taxiongoing
 app = Flask(__name__, static_folder='static', static_url_path='')
 # run_with_ngrok(app)
 
-taxi_id_p = -1
+
 
 @app.route('/')
 def index():
@@ -54,8 +54,11 @@ def matchtaxi():
   data = json.loads(request.data)
   print(data)
   # taxi_id_p, taxi_name, taxi_coj, taxi_el = Match(data['fx'],data['fy'],data['tx'],data['ty'],zip(find_taxis())).match()
-  Match(data['fx'],data['fy'],data['tx'],data['ty'],zip(find_taxis())).match()
-  return {'name':'bob','costofjourney':'2','estimatedlen':'6'}
+  id,name,coj,el = Match(data['fx'],data['fy'],data['tx'],data['ty'],zip(find_taxis())).match()
+  global taxi_id_p
+  taxi_id_p = id
+  
+  return {'name':name,'costofjourney':coj,'estimatedlen':el}
 
 @app.route('/waiting')
 def waiting():
@@ -64,18 +67,22 @@ def waiting():
    'fy':request.args.get('fromy'),
    'tx':request.args.get('tox'),
    'ty':request.args.get('toy')
-  }
-  )
+  })
 
 @app.route('/paired')
 def paired():
-  # data = json.loads(request.data)
-  # return render_template('paired.html',data={'name':data.name,'costofjourney':data.costofjourney,'estimatedlen':data.estimatedlen}) #,'taxi_id':taxi_id
-  return render_template('index.html',data={})
+  return render_template('paired.html',data={'name':request.args.get('name'),'costofjourney':request.args.get('coj'),'estimatedlen':request.args.get('el')}) #,'taxi_id':taxi_id
+  # return render_template('index.html',data={})
+
+@app.route('/endjourney')
+def endjourneypage():
+  return render_template('endjourney.html',data={})
 
 @app.route('/api/endjourney', methods=['POST'])
 def endjourney():
+  print(taxi_id_p)
   passenger_end_journey(taxi_id_p);
+  return {}
 
 @app.route('/taxiadded')
 def taxiadded():

@@ -27,6 +27,6 @@ def taximain(base_price, min_price, num_cars):
 
 def taxiongoing(taxi_datas):
 	ids = [x.id for x in taxi_datas]
-	print(type(ids[0]))
+	print(len(ids))
 	with mp.Pool(len(taxi_datas)) as p:
 		p.map(taxi_running,ids)
