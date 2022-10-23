@@ -31,7 +31,7 @@ def find_taxis():
 
 
 def add_taxi(x,y,base_price, price_min):
-	taxi_id = SC.add_taxi(x,y,base_price,price_min)
+	taxi_id = SC.add_taxi(x,y,base_price,price_min).return_value
 	return taxi_id
 
 def search_and_find_pair(taxi_id):
