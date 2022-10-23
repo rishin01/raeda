@@ -28,7 +28,7 @@ class TaxiData:
 		self._isAlive = boolsarray[1]
 	
 	def returnarray():
-		return [self.x,self.y,self.base_price,self.price_min,self.available]
+		return [self.taxi_address,self.x,self.y,self.base_price,self.price_min,self.available]
 
 alltaxiints = get_from_blockchain_ints()
 alltaxiaddresses = get_from_blockchain_addresses()

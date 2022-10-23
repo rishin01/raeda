@@ -11,7 +11,7 @@ class Match:
         self.num_cars = len(self.cars_data)
         self.cars = pd.DataFrame(data=self.cars_data,
                                  index=['car' + str(i + 1) for i in range(self.num_cars)],
-                                 columns=['X location', 'Y location', 'Base Price', 'Price/min', 'Available']
+                                 columns=['Address', 'X location', 'Y location', 'Base Price', 'Price/min', 'Available']
                                 )
         
     def available(self):
@@ -39,14 +39,14 @@ class Match:
             match = distances.loc[distances.Distance==distances.Distance.min()]
             if len(match)>1: # If there are multiple matches, we select one randomly.
                 match = match.sample(n=1)
-                pair(match.index[0])
+                pair(match.index[0], match.loc['Address'])
             else:
-                pair(match.index[0])
-        return
+                pair(match.index[0], match.loc['Address'])
+        return 
 
 ''' 
 to do:
-return the addresses list
+args of pai should be Address, passenger_loc, passenger_dest
 journey cost
 estimated journey time
 estimated time until pickup
