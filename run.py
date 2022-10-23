@@ -39,8 +39,8 @@ def inittaxi():
   data = json.loads(request.data)
   print(data['flatrate'])
   print(data['pricemin'])
-  # ADD TAXI TO BLOCKCHAIN:
-  # sc.add_taxi(caitlin.x,caitlin.y,data['flatrate'],data['pricemin'])
+  x_init, y_init = init_locations()
+  #sc.add_taxi(x_init,y_init,data['flatrate'],data['pricemin'],1)
   return render_template('taxiadded.html',data={})
 
 @app.route('/waiting')
