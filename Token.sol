@@ -31,7 +31,7 @@ contract Token {
 	event Available(uint taxiid, uint x, uint y, uint base_price, uint price_min);
 	event Paired(address passengerAddress, uint taxiid);
 	event StartJourney(address passengerAddress, uint taxiid);
-	event EndJourney(address passengerAddress, uint taxiid);
+	event EndJourney(bool avail);
 	event TaxiId(uint taxiid);
 
 	uint current_taxi_id;
@@ -67,8 +67,8 @@ contract Token {
 		taxi_num += 1;
 		available_num +=1;
 
-		return newdata.id;
-		//emit TaxiId(taxiAddressIds[msg.sender]);
+		//return newdata.id;
+		emit TaxiId(taxiAddressIds[msg.sender]);
 		//emit Available(taxiAddressIds[msg.sender],x,y,base_price,price_min);
 	}
 
@@ -124,8 +124,8 @@ contract Token {
 			taxiIdData[taxiid].y = y;
 			boolean_output = true;
 		}
-		return boolean_output;
-
+		//return boolean_output;
+		emit EndJourney(boolean_output);
 	}
 
 	function passenger_end_journey(uint taxiid) public {

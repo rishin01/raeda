@@ -67,14 +67,10 @@ requesttaxi.click(function(){
 		headers: {
 			'Content-Type':'application/json',
 		},
-		body: JSON.stringify({
-			from:fromInput,
-			to:toInput
-		}),
+		body: JSON.stringify({}),
 	}).then((response) => response.json())
 	.then((data) => {
-		console.log(data['paired'])
-		if (!data['paired']) window.location.href = window.location.origin + '/waiting;'//?taxi_id='+data['taxi_id']
+		window.location.href = window.location.origin + '/waiting?fromx='+fromInput[1]+'&fromy='+fromInput[3]+'&tox='+toInput[1]+'&toy='+toInput[3];
 	});
 
 })

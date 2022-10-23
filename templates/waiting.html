@@ -7,6 +7,8 @@
 
 {% block main_content %}
 	<h2 class="main_msg">Waiting to be Paired...</h2>
+	<h2 class="main_msg">{{data["from"]}}</h2>
+	<h2 class="main_msg">{{data["to"]}}</h2>
 	<script>
 		fetch('/api/matchtaxi',{
 			method: 'POST',
@@ -14,8 +16,10 @@
 				'Content-Type':'application/json',
 			},
 			body: JSON.stringify({
-				from:fromInput,
-				to:toInput
+				'fx':"{{data['fx']}}",
+				'fy':"{{data['fy']}}",
+				'tx':"{{data['tx']}}",
+				'ty':"{{data['ty']}}",
 			}),
 		}).then((response) => response.json())
 		.then((data) => {

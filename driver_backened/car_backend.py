@@ -15,16 +15,18 @@ class Taxi:
 		self.id = add_taxi(self.x,self.y,self.base_price,self.min_price)
 
 
+def taxi_running(id):
+	while True:
+		__, __, (x,y) = search_and_find_pair(id)
+		taxi_during_route(id, x, y)
+
 def taximain(base_price, min_price, num_cars):
 	taxi_datas = [Taxi(base_price, min_price) for i in range(int(num_cars))]
 	[x.upload() for x in taxi_datas]
+	return taxi_datas
+
+def taxiongoing(taxi_datas):
 	ids = [x.id for x in taxi_datas]
 	print(type(ids[0]))
-	
-	def taxi_running(id):
-		while True:
-			__, __, (x,y) = search_and_find_pair(id)
-			taxi_during_route(id, x, y)
-
-	with mp.Pool(int(num_cars)) as p:
+	with mp.Pool(len(taxi_datas)) as p:
 		p.map(taxi_running,ids)

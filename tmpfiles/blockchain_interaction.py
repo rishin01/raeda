@@ -6,7 +6,7 @@ network.connect('matic_mumbai')
 print(network.is_connected())
 
 accounts.add('9fa44b230cadfd815b7d566708f3b2a2753ece818d0f94ef0caff79e75e68fab')
-SC = Contract('0xC01C79D1fD24b920058F063c37817c96F028aCb6', owner = accounts[0]) # do we need abi here too? ABI is just a 'list' thing of functions and events
+SC = Contract('0x8dfEEe308CD38798EF08bF160EFEeff40D60d3C6', owner = accounts[0]) # do we need abi here too? ABI is just a 'list' thing of functions and events
 
 
 
@@ -14,24 +14,25 @@ SC = Contract('0xC01C79D1fD24b920058F063c37817c96F028aCb6', owner = accounts[0])
 #access account via accounts[0]
 
 def find_taxis():
-    n = SC.check_number_available()
+	n = SC.check_number_available()
 
-    ids = []
-    xs = []
-    ys = []
-    base_prices = []
-    price_mins = []
-    for i in range(n):
-        ids.append(SC.check_available_taxi_ids(i))
-        xs.append(SC.check_available_taxi_x(i))
-        ys.append(SC.check_available_taxi_y(i))
-        base_prices.append(SC.check_available_taxi_base_price(i))
-        price_mins.append(SC.check_available_taxi_price_min(i))
-    return ids, xs, ys, base_prices, price_mins
+	ids = []
+	xs = []
+	ys = []
+	base_prices = []
+	price_mins = []
+	for i in range(n):
+		ids.append(SC.check_available_taxi_ids(i))
+		xs.append(SC.check_available_taxi_x(i))
+		ys.append(SC.check_available_taxi_y(i))
+		base_prices.append(SC.check_available_taxi_base_price(i))
+		price_mins.append(SC.check_available_taxi_price_min(i))
+	return ids, xs, ys, base_prices, price_mins
 
 
 def add_taxi(x,y,base_price, price_min):
-	taxi_id = SC.add_taxi(x,y,base_price,price_min).return_value
+	taxi_id = SC.add_taxi(x,y,base_price,price_min).events
+	print(type(taxi_id), taxi_id)
 	return taxi_id
 
 def search_and_find_pair(taxi_id):
@@ -50,7 +51,7 @@ def search_and_find_pair(taxi_id):
 
 def taxi_during_route(taxiid,x,y):
 	while True:
-		if SC.taxi_end_journey(taxiid, x, y):
+		if SC.taxi_end_journey(taxiid, x, y).events:
 			break
 
 def passenger_end_journey(taxiid):

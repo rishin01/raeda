@@ -13,7 +13,7 @@ import random
 from flask import Flask, render_template, jsonify, request
 from match import Match
 from blondie.token.scripts.blockchain_interaction import *
-from driver_backened.car_backend import taximain
+from driver_backened.car_backend import taximain, taxiongoing
 # from flask_ngrok import run_with_ngrok
 
 app = Flask(__name__, static_folder='static', static_url_path='')
@@ -33,10 +33,7 @@ def taxi():
 
 @app.route('/api/requesttaxi', methods=['POST'])
 def requesttaxi():
-  data = json.loads(request.data)
-  print(data['from'])
-  print(data['to'])
-  return {'paired':False}#,'taxi_id':taxi_id
+  return {}
   
 @app.route('/api/inittaxi', methods=['POST'])
 def inittaxi():
@@ -44,6 +41,9 @@ def inittaxi():
   print(data['flatrate'])
   print(data['pricemin'])
   print(data['numcars'])
+  global taxis_data
+  taxis_data = taximain(data['flatrate'],data['pricemin'],data['numcars'])
+  print(taxis_data)
   # x_init, y_init = init_locations()
   # taxi_id = add_taxi(x_init,y_init,data['flatrate'],data['pricemin'])
   return {}
@@ -52,18 +52,26 @@ def inittaxi():
 @app.route('/api/matchtaxi', methods=['POST'])
 def matchtaxi():
   data = json.loads(request.data)
-  taxi_id_p = Match(data,zip(find_taxis())).match()
-  return {'name':'bob','costofjourney':'5','estimatedlen':'2'}
+  print(data)
+  # taxi_id_p, taxi_name, taxi_coj, taxi_el = Match(data['fx'],data['fy'],data['tx'],data['ty'],zip(find_taxis())).match()
+  Match(data['fx'],data['fy'],data['tx'],data['ty'],zip(find_taxis())).match()
+  return {'name':'bob','costofjourney':'2','estimatedlen':'6'}
 
 @app.route('/waiting')
 def waiting():
-  return render_template('waiting.html',data={})
-  # return render_template('waiting.html',data={'taxi_id':request.args.get('taxi_id')})
+  return render_template('waiting.html',data={
+   'fx':request.args.get('fromx'),
+   'fy':request.args.get('fromy'),
+   'tx':request.args.get('tox'),
+   'ty':request.args.get('toy')
+  }
+  )
 
 @app.route('/paired')
 def paired():
-  data = json.loads(request.data)
-  return render_template('paired.html',data={'name':data.name,'costofjourney':data.costofjourney,'estimatedlen':data.estimatedlen}) #,'taxi_id':taxi_id
+  # data = json.loads(request.data)
+  # return render_template('paired.html',data={'name':data.name,'costofjourney':data.costofjourney,'estimatedlen':data.estimatedlen}) #,'taxi_id':taxi_id
+  return render_template('index.html',data={})
 
 @app.route('/api/endjourney', methods=['POST'])
 def endjourney():
@@ -72,6 +80,12 @@ def endjourney():
 @app.route('/taxiadded')
 def taxiadded():
   return render_template('taxiadded.html',data={})
+
+@app.route('/api/taxitobeongoing', methods=['POST'])
+def taxitobeongoing():
+  print(taxis_data)
+  taxiongoing(taxis_data)
+  return {}
 
 if __name__ == "__main__":
 	app.run()

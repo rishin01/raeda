@@ -3,5 +3,5 @@
 tmp_dir/**
 blondie/
 brookie/
-brownie/
+tmpfiles/
 .ipynb_checkpoints/

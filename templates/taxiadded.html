@@ -6,4 +6,13 @@
 
 {% block main_content %}
 	<h2 class="main_msg">Taxi Added to Blockchain!</h2>
+	<script>
+		fetch('/api/taxitobeongoing',{
+			method: 'POST',
+			headers: {
+				'Content-Type':'application/json',
+			},
+			body: JSON.stringify({}),
+		});
+	</script>
 {% endblock %}
