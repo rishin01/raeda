@@ -6,9 +6,7 @@
 {% endblock %}
 
 {% block main_content %}
-	<div>
-		<h2>You have been matched with {{name}}!</h2>
-	</div>
-	<h3>Cost of Journey: {{costofjourney}} Matic</h3>
-	<h3>Estimated Journey Time: {{est_len}}</h3>
+	<h2 class="main_msg">You have been matched with {{data["name"]}}!</h2>
+	<h3 class="main_msg">Cost of Journey: {{data["costofjourney"]}} Matic</h3>
+	<h3 class="main_msg">Estimated Journey Time: {{data["estimatedlen"]}} minutes</h3>
 {% endblock %}

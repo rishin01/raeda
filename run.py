@@ -31,6 +31,7 @@ def requesttaxi():
   data = json.loads(request.data)
   print(data['from'])
   print(data['to'])
+  m = Match(data)
   # caitlin to do stuff
   return {'paired':True}
   
@@ -41,11 +42,19 @@ def inittaxi():
   print(data['pricemin'])
   x_init, y_init = init_locations()
   #sc.add_taxi(x_init,y_init,data['flatrate'],data['pricemin'],1)
-  return render_template('taxiadded.html',data={})
+  return {'taxiadded':True}
 
 @app.route('/waiting')
 def waiting():
   return render_template('waiting.html',data={})
+
+@app.route('/paired')
+def paired():
+  return render_template('paired.html',data={'name':'Bob car','costofjourney':'5','estimatedlen':'2'})
+
+@app.route('/taxiadded')
+def taxiadded():
+  return render_template('taxiadded.html',data={})
 
 if __name__ == "__main__":
 	app.run()

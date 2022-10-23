@@ -72,5 +72,8 @@ inittaxi.click(function(){
 			flatrate:flatrateInput,
 			pricemin:priceminInput
 		}),
+	}).then((response) => response.json())
+	.then((data) => {
+		if (data['taxiadded']) window.location.href = window.location.origin + '/taxiadded';
 	});
 })
