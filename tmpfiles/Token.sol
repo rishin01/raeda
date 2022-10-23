@@ -16,8 +16,18 @@ contract Token {
 		bool _isAlive;
 	}
 
+	struct Pair {
+		uint taxi_id;
+		address passenger_address;
+		uint x_current;
+		uint y_current;
+		uint x_dest;
+		uint y_dest;
+	}
+
 	mapping(address => uint) taxiAddressIds;
 	mapping(uint => TaxiDataStruct) taxiIdData;
+	mapping(uint => Pair) taxiPair;
 	event Available(uint taxiid, uint x, uint y, uint base_price, uint price_min);
 	event Paired(address passengerAddress, uint taxiid);
 	event StartJourney(address passengerAddress, uint taxiid);
@@ -41,7 +51,7 @@ contract Token {
 		}
 	}
 
-	function add_taxi(uint x, uint y, uint base_price, uint price_min) public {
+	function add_taxi(uint x, uint y, uint base_price, uint price_min) public returns (uint) {
 		taxiAddressIds[msg.sender] = current_taxi_id;
 		TaxiDataStruct memory newdata;
 		newdata.taxi_address = msg.sender;
@@ -57,20 +67,73 @@ contract Token {
 		taxi_num += 1;
 		available_num +=1;
 
+		return newdata.id;
 		//emit TaxiId(taxiAddressIds[msg.sender]);
 		//emit Available(taxiAddressIds[msg.sender],x,y,base_price,price_min);
 	}
 
-	function pair(uint taxiid) public {
-		check_taxi_exists(taxiid);
+	function pair(uint taxiid, uint x_loc, uint y_loc, uint x_d, uint y_d) public {
 		if (taxiIdData[taxiid].available) {
 			taxiIdData[taxiid].available = false;
-			emit Paired(msg.sender,taxiid);
+			available_num -=1;
+			Pair memory newpair;
+			newpair.taxi_id = taxiid;
+			newpair.passenger_address = msg.sender;
+			newpair.x_current = x_loc;
+			newpair.y_current = y_loc;
+			newpair.x_dest = x_d;
+			newpair.y_dest = y_d;
+
+			taxiPair[taxiid] = newpair;
 		}
 		available_num -=1;
 	}
 
-	function passenger_update_taxi_location(uint taxiid, uint x, uint y) public {
+	function check_for_pair(uint taxi_id) public view returns (bool) {
+		bool boolean_output;
+		boolean_output = false;
+		if (!taxiIdData[taxi_id].available){
+			boolean_output = true;
+		}
+		return boolean_output;
+	}
+
+	function retrieve_passenger_address(uint taxiid) public view returns (address) {
+		return taxiPair[taxiid].passenger_address;
+	}
+	function retrieve_x_current(uint taxiid) public view returns (uint) {
+		return taxiPair[taxiid].x_current;
+	}
+	function retrieve_y_current(uint taxiid) public view returns (uint) {
+		return taxiPair[taxiid].y_current;
+	}
+	function retrieve_x_dest(uint taxiid) public view returns (uint) {
+		return taxiPair[taxiid].x_dest;
+	}
+	function retrieve_y_dest(uint taxiid) public view returns (uint) {
+		return taxiPair[taxiid].y_dest;
+	}
+
+	//Functions to get data about pair, and then function to change availability and increase num_acailability again
+
+	function taxi_end_journey(uint taxiid, uint x, uint y) public returns (bool){
+		bool boolean_output;
+		boolean_output = false;
+		if (taxiIdData[taxiid].available){
+			taxiIdData[taxiid].x = x;
+			taxiIdData[taxiid].y = y;
+			boolean_output = true;
+		}
+		return boolean_output;
+
+	}
+
+	function passenger_end_journey(uint taxiid) public {
+		taxiIdData[taxiid].available = true;
+	}
+
+
+	function update_taxi_location(uint taxiid, uint x, uint y) public {
 		check_taxi_exists(taxiid);
 		taxiIdData[taxiid].x = x;
 		taxiIdData[taxiid].y = y;
@@ -194,19 +257,7 @@ contract Token {
 		emit StartJourney(passengerAddress,taxiAddressIds[msg.sender]);
 	}
 
-	function passenger_exit_taxi(uint taxiid, uint x, uint y) public {
-		check_taxi_exists(taxiid);
-		passenger_update_taxi_location(taxiid,x,y);
-		taxiIdData[taxiid].available = true;
-		emit EndJourney(msg.sender,taxiid);
-		emit Available(
-			taxiid,
-			taxiIdData[taxiid].x,
-			taxiIdData[taxiid].y,
-			taxiIdData[taxiid].base_price,
-			taxiIdData[taxiid].price_min
-		);
-	}
+
 
 	function remove_taxi() public {
 		uint taxi_id_to_remove = taxiAddressIds[msg.sender];
