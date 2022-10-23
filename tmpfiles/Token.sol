@@ -140,18 +140,18 @@ contract Token {
 	}
 
 
-	function check_available_taxi_addresses(uint i) public view returns (address) {
-		address address_output;
+	function check_available_taxi_ids(uint i) public view returns (uint) {
+		uint id_output;
 
 
 		if (taxiIdData[i]._isAlive){
 			if (taxiIdData[i].available) {
-				address_output=taxiIdData[i].taxi_address;
+				id_output=taxiIdData[i].taxi_id;
 
 			}
 		}
 
-		return address_output;
+		return id_output;
 	}
 
 	function check_available_taxi_x(uint i) public view returns (uint) {

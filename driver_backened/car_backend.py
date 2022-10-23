@@ -2,23 +2,28 @@ import pandas as pd
 from brookie.scripts.blockchain_interaction import *
 from taxidata import TaxiData
 import multiprocessing as mp
+from random import randint
+
+class Taxi:
+	def __init__(self, base_price, min_price):
+		self.x = randint(-5,5)
+		self.y = randint(-5,5)
+		self.base_price = base_price
+		self.min_price = min_price
+
+	def upload(self):
+		self.id = add_taxi(self.x,self.y,self.base_price,self.min_price)
 
 
-taxi_datas = [TaxiData for i in range(mp.cpu_count())]
+def taximain(base_price, min_price, num_cars):
+	taxi_datas = [Taxi(base_price, min_price) for i in range(num_cars)]
+	[x.upload() for x in taxi_datas]
 
-# check for broadcast of pair that includes your own address
-def is_pair():
-    '''
-    reads pair from the blockchain, checks whether the pair includes your own address.
-    '''
-	search_and_find_pair(my_address)
-    # if pair.loc['Address']==my_address:
-        # send to blockchain that payment is made
-        # edit taxidata so that available = 0
+	def taxi_running(taxi):
+		while True:
+			__, __, (x,y) = search_and_find_pair(taxi.id)
 
+			taxi_during_route(taxiid, x, y)
 
-# check your own wallet to see if payment has been made
-
-# once pair is received, send to blockchain that payment is received, and set availabile = 0
-
-# check for broadcast of end journey, then set available = 1
+	with mp.Pool(num_cars) as p:
+		p.map(taxi_running,taxi_datas)
