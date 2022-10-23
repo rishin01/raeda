@@ -146,8 +146,7 @@ contract Token {
 
 		if (taxiIdData[i]._isAlive){
 			if (taxiIdData[i].available) {
-				id_output=taxiIdData[i].taxi_id;
-
+				id_output=taxiIdData[i].id;
 			}
 		}
 

@@ -40,15 +40,10 @@ class Match:
             match = distances.loc[distances.Distance==distances.Distance.min()]
             if len(match)>1: # If there are multiple matches, we select one randomly.
                 match = match.sample(n=1)
-                pair(match.index[0], match.loc['Id'])
+                pair(match.loc['Id'], self.passenger_loc[0], self.passenger_loc[1], self.passenger_dest[0], self.passenger_dest[1])
             else:
-                pair(match.index[0], match.loc['Id'])
+                pair(match.loc['Id'], self.passenger_loc[0], self.passenger_loc[1], self.passenger_dest[0], self.passenger_dest[1])
+        car_name = match.index[0]
+        time_until_pickup = match.Distance
+        journey_time = sum(self.passenger_dest - self.passenger_loc)
         return match.loc['Id']
-
-'''
-to do:
-args of pai should be Address, passenger_loc, passenger_dest
-journey cost
-estimated journey time
-estimated time until pickup
-'''

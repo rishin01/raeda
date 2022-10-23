@@ -7,4 +7,19 @@
 
 {% block main_content %}
 	<h2 class="main_msg">Waiting to be Paired...</h2>
+	<script>
+		fetch('/api/matchtaxi',{
+			method: 'POST',
+			headers: {
+				'Content-Type':'application/json',
+			},
+			body: JSON.stringify({
+				from:fromInput,
+				to:toInput
+			}),
+		}).then((response) => response.json())
+		.then((data) => {
+			if (!data['paired']) window.location.href = window.location.origin + '/paired?name=';//?taxi_id='+data['taxi_id']
+		});
+	</script>
 {% endblock %}

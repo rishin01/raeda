@@ -36,7 +36,6 @@ def requesttaxi():
   data = json.loads(request.data)
   print(data['from'])
   print(data['to'])
-  taxi_id_p = Match(data,zip(find_taxis())).match()
   return {'paired':False}#,'taxi_id':taxi_id
   
 @app.route('/api/inittaxi', methods=['POST'])
@@ -47,9 +46,14 @@ def inittaxi():
   print(data['numcars'])
   # x_init, y_init = init_locations()
   # taxi_id = add_taxi(x_init,y_init,data['flatrate'],data['pricemin'])
-  taximain(data['flatrate'],data['pricemin'],data['numcars']);
   return {}
   # return {'taxi_id':taxi_id}
+
+@app.route('/api/matchtaxi', methods=['POST'])
+def matchtaxi():
+  data = json.loads(request.data)
+  taxi_id_p = Match(data,zip(find_taxis())).match()
+  return {'name':'bob','costofjourney':'5','estimatedlen':'2'}
 
 @app.route('/waiting')
 def waiting():
@@ -58,7 +62,8 @@ def waiting():
 
 @app.route('/paired')
 def paired():
-  return render_template('paired.html',data={'name':'Bob car','costofjourney':'5','estimatedlen':'2'}) #,'taxi_id':taxi_id
+  data = json.loads(request.data)
+  return render_template('paired.html',data={'name':data.name,'costofjourney':data.costofjourney,'estimatedlen':data.estimatedlen}) #,'taxi_id':taxi_id
 
 @app.route('/api/endjourney', methods=['POST'])
 def endjourney():
