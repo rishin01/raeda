@@ -16,18 +16,18 @@ SC = Contract('0xad8CAf13d083DF9C30f5fb69214109Be42089d6c', owner = accounts[0])
 def find_taxis():
     n = SC.check_number_available()
 
-    addresses = []
+    ids = []
     xs = []
     ys = []
     base_prices = []
     price_mins = []
     for i in range(n):
-        addresses.append(SC.check_available_taxi_addresses(i))
+        ids.append(SC.check_available_taxi_ids(i))
         xs.append(SC.check_available_taxi_x(i))
         ys.append(SC.check_available_taxi_y(i))
         base_prices.append(SC.check_available_taxi_base_price(i))
         price_mins.append(SC.check_available_taxi_price_min(i))
-    return addresses, xs, ys, base_prices, price_mins
+    return ids, xs, ys, base_prices, price_mins
 
 
 def add_taxi(x,y,base_price, price_min):
