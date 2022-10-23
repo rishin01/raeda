@@ -24,7 +24,7 @@ body {
 	padding: 40px;
 }
 
-#title a, #title h2 {
+#title a, #title h2, .main_msg {
 	/* Fallback: Set a background color. */
 	background-color: #f3d577;
 	
@@ -45,6 +45,11 @@ body {
 
 #title h2 {
 	font-size: 30px;
+}
+
+.main_msg {
+	width: fit-content;
+	margin: auto;
 }
 
 .main_button {

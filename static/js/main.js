@@ -71,5 +71,10 @@ requesttaxi.click(function(){
 			from:fromInput,
 			to:toInput
 		}),
+	}).then((response) => response.json())
+	.then((data) => {
+		data['paired'] = true;
+		window.location = window.location + '/waiting';
 	});
 })
+

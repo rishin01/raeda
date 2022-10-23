@@ -20,8 +20,8 @@ priceminbutton.click(function(){
 	pricemininputdiv.css('display','flex');
 });
 
-var flatrateInput = '';
-var priceminInput = '';
+var flatrateInput = '1';
+var priceminInput = '1';
 
 function intFormat(s){
 	return parseInt(s)!=undefined;

@@ -9,6 +9,7 @@
 """
 
 import json
+import random
 from flask import Flask, render_template, jsonify, request
 # from flask_ngrok import run_with_ngrok
 
@@ -31,15 +32,20 @@ def requesttaxi():
   print(data['from'])
   print(data['to'])
   # caitlin to do stuff
-  return data
-
+  return {'paired':True}
+  
 @app.route('/api/inittaxi', methods=['POST'])
 def inittaxi():
   data = json.loads(request.data)
   print(data['flatrate'])
   print(data['pricemin'])
-  # caitlin to do stuff
-  return data
-    
+  # ADD TAXI TO BLOCKCHAIN:
+  # sc.add_taxi(caitlin.x,caitlin.y,data['flatrate'],data['pricemin'])
+  return render_template('taxiadded.html',data={})
+
+@app.route('/waiting')
+def waiting():
+  return render_template('waiting.html',data={})
+
 if __name__ == "__main__":
 	app.run()
