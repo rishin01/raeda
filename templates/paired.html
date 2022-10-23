@@ -2,11 +2,20 @@
 
 {% block scripts %}
 	{{super()}}
-	<!-- <script src="js/paired.js" defer></script> -->
+	
 {% endblock %}
 
 {% block main_content %}
 	<h2 class="main_msg">You have been matched with {{data["name"]}}!</h2>
 	<h3 class="main_msg">Cost of Journey: {{data["costofjourney"]}} Matic</h3>
 	<h3 class="main_msg">Estimated Journey Time: {{data["estimatedlen"]}} minutes</h3>
+	<div id="exitbutton" class="main_button">
+		<h2>get out of the taxi</h2>
+	</div>
+	<script>
+		$('#exitbutton').click(function(){
+			console.log('clicked');
+			window.location.href = window.location.origin + '/endjourney?name={{data["name"]}}';
+		}); //&taxi_id={{data["taxi_id"]}}
+	</script>
 {% endblock %}

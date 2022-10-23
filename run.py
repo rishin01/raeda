@@ -11,10 +11,13 @@
 import json
 import random
 from flask import Flask, render_template, jsonify, request
+from match import Match
 # from flask_ngrok import run_with_ngrok
 
 app = Flask(__name__, static_folder='static', static_url_path='')
 # run_with_ngrok(app)
+
+taxi_id_p = -1
 
 @app.route('/')
 def index():
@@ -31,9 +34,8 @@ def requesttaxi():
   data = json.loads(request.data)
   print(data['from'])
   print(data['to'])
-  m = Match(data)
-  # caitlin to do stuff
-  return {'paired':True}
+  taxi_id_p = Match(find_taxis()).match()
+  return {'paired':True}#,'taxi_id':taxi_id
   
 @app.route('/api/inittaxi', methods=['POST'])
 def inittaxi():
@@ -41,16 +43,21 @@ def inittaxi():
   print(data['flatrate'])
   print(data['pricemin'])
   x_init, y_init = init_locations()
-  #sc.add_taxi(x_init,y_init,data['flatrate'],data['pricemin'],1)
-  return {'taxiadded':True}
+  taxi_id = add_taxi(x_init,y_init,data['flatrate'],data['pricemin'])
+  return {'taxi_id':taxi_id}
 
 @app.route('/waiting')
 def waiting():
   return render_template('waiting.html',data={})
+  # return render_template('waiting.html',data={'taxi_id':request.args.get('taxi_id')})
 
 @app.route('/paired')
 def paired():
-  return render_template('paired.html',data={'name':'Bob car','costofjourney':'5','estimatedlen':'2'})
+  return render_template('paired.html',data={'name':'Bob car','costofjourney':'5','estimatedlen':'2'}) #,'taxi_id':taxi_id
+
+@app.route('/api/endjourney', methods=['POST'])
+def endjourney():
+  passenger_end_journey(taxi_id_p);
 
 @app.route('/taxiadded')
 def taxiadded():

@@ -74,6 +74,6 @@ inittaxi.click(function(){
 		}),
 	}).then((response) => response.json())
 	.then((data) => {
-		if (data['taxiadded']) window.location.href = window.location.origin + '/taxiadded';
+		window.location.href = window.location.origin + '/taxiadded?taxi_id='+data['taxi_id'];
 	});
 })

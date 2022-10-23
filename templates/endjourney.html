@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block scripts %}
+	{{super()}}
+{% endblock %}
+
+{% block main_content %}
+	<h2 class="main_msg">You've ended your journey with {{data["name"]}}!</h2>
+	<div id="backbutton" class="main_button">
+		<h2>back</h2>
+	</div>
+	<script>
+		$('#backbutton').click(function(){
+			fetch('/api/endjourney',{
+				method: 'POST',
+				headers: {
+					'Content-Type':'application/json',
+				},
+				body: JSON.stringify({}),//{"taxi_id":{{data["taxi_id"]}}}
+			})
+			window.location.href = window.location.origin;
+		});
+	</script>
+{% endblock %}

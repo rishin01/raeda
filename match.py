@@ -1,9 +1,9 @@
 import pandas as pd
-from blondie.scripts.blockchain_interaction import *
-import taxidata.py
+import taxidata
+from blondie.token.scripts.blockchain_interaction import *
 
 class Match:
-
+    
     def __init__(data):
         self.passenger_loc = (int(data['from'][1]),int(data['from'][3]))
         self.passenger_dest = (int(data['to'][1]),int(data['to'][3]))

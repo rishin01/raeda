@@ -74,7 +74,7 @@ requesttaxi.click(function(){
 	}).then((response) => response.json())
 	.then((data) => {
 		console.log(data['paired'])
-		if (data['paired']) window.location.href = window.location.origin + '/waiting';
+		if (data['paired']) window.location.href = window.location.origin + '/waiting?taxi_id='+data['taxi_id'];
 	});
 })
 
