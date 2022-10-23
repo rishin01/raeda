@@ -1,4 +1,4 @@
-from blondie.token.scripts.blockchain_interaction
+from blondie.token.scripts.blockchain_interaction import *
 
 class TaxiData:
 	def __init__(self):

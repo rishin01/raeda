@@ -1,12 +1,15 @@
 
 const flatratebutton = $('#flatratebutton');
 const priceminbutton = $('#priceminbutton');
+const numcarsbutton = $('#numcarsbutton');
 
 const flatrateinputdiv = $('#flatrateinput');
 const pricemininputdiv = $('#pricemininput');
+const numcarsinputdiv = $('#numcarsinput');
 
 const flatrateinput = $('#flatrateinput input');
 const pricemininput = $('#pricemininput input');
+const numcarsinput = $('#numcarsinput input');
 
 const inittaxi = $('#inittaxi')
 
@@ -20,15 +23,22 @@ priceminbutton.click(function(){
 	pricemininputdiv.css('display','flex');
 });
 
+numcarsbutton.click(function(){
+	numcarsbutton.css('display','none');
+	numcarsinputdiv.css('display','flex');
+});
+
+
 var flatrateInput = '1';
 var priceminInput = '1';
+var numcarsInput = '5';
 
 function intFormat(s){
 	return parseInt(s)!=undefined;
 }
 
 function checkValidInputs(){
-	if (intFormat(priceminInput) && intFormat(flatrateInput))
+	if (intFormat(priceminInput) && intFormat(flatrateInput) && intFormat(numcarsInput))
 		inittaxi.addClass('inputsentered');
 }
 
@@ -51,16 +61,17 @@ pricemininput.on('input',function() {
 	priceminInput = $(this).val();
 	checkValidInputs();
 });
-pricemininput.keypress(function(e) {
-	if (e.which == 13) pricemininput.blur();
-});
+pricemininput.keypress(function(e) {if (e.which == 13) pricemininput.blur();});
+pricemininput.focusin(function(){pricemininputdiv.css('opacity','1');});
+pricemininput.focusout(function(){if (intFormat(priceminInput)) pricemininputdiv.css('opacity','0.6');});
 
-pricemininput.focusin(function(){
-	pricemininputdiv.css('opacity','1');
+numcarsinput.on('input',function() {
+	numcarsInput = $(this).val();
+	checkValidInputs();
 });
-pricemininput.focusout(function(){
-	if (intFormat(priceminInput)) pricemininputdiv.css('opacity','0.6');
-});
+numcarsinput.keypress(function(e) {if (e.which == 13) numcarsinput.blur();});
+numcarsinput.focusin(function(){numcarsinputdiv.css('opacity','1');});
+numcarsinput.focusout(function(){if (intFormat(numcarsInput)) numcarsinputdiv.css('opacity','0.6');});
 
 inittaxi.click(function(){
 	fetch('/api/inittaxi',{
@@ -70,10 +81,11 @@ inittaxi.click(function(){
 		},
 		body: JSON.stringify({
 			flatrate:flatrateInput,
-			pricemin:priceminInput
+			pricemin:priceminInput,
+			numcars:numcarsInput
 		}),
 	}).then((response) => response.json())
 	.then((data) => {
-		window.location.href = window.location.origin + '/taxiadded?taxi_id='+data['taxi_id'];
+		window.location.href = window.location.origin + '/taxiadded';//?taxi_id='+data['taxi_id']
 	});
 })

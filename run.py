@@ -12,6 +12,8 @@ import json
 import random
 from flask import Flask, render_template, jsonify, request
 from match import Match
+from blondie.token.scripts.blockchain_interaction import *
+# from car_backend import taximain
 # from flask_ngrok import run_with_ngrok
 
 app = Flask(__name__, static_folder='static', static_url_path='')
@@ -42,9 +44,12 @@ def inittaxi():
   data = json.loads(request.data)
   print(data['flatrate'])
   print(data['pricemin'])
-  x_init, y_init = init_locations()
-  taxi_id = add_taxi(x_init,y_init,data['flatrate'],data['pricemin'])
-  return {'taxi_id':taxi_id}
+  print(data['numcars'])
+  # x_init, y_init = init_locations()
+  # taxi_id = add_taxi(x_init,y_init,data['flatrate'],data['pricemin'])
+  taximain(data['flatrate'],data['pricemin'],data['numcars']);
+  return {}
+  # return {'taxi_id':taxi_id}
 
 @app.route('/waiting')
 def waiting():
