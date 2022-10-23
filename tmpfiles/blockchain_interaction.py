@@ -6,7 +6,7 @@ network.connect('matic_mumbai')
 print(network.is_connected())
 
 accounts.add('9fa44b230cadfd815b7d566708f3b2a2753ece818d0f94ef0caff79e75e68fab')
-SC = Contract('0xad8CAf13d083DF9C30f5fb69214109Be42089d6c', owner = accounts[0]) # do we need abi here too? ABI is just a 'list' thing of functions and events
+SC = Contract('0xC01C79D1fD24b920058F063c37817c96F028aCb6', owner = accounts[0]) # do we need abi here too? ABI is just a 'list' thing of functions and events
 
 
 
@@ -31,7 +31,7 @@ def find_taxis():
 
 
 def add_taxi(x,y,base_price, price_min):
-    taxi_id = SC.add_taxi(x,y,base_price,price_min)
+	taxi_id = SC.add_taxi(x,y,base_price,price_min)
 	return taxi_id
 
 def search_and_find_pair(taxi_id):

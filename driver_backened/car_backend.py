@@ -1,13 +1,13 @@
 import pandas as pd
-from brookie.scripts.blockchain_interaction import *
+from blondie.token.scripts.blockchain_interaction import *
 from taxidata import TaxiData
 import multiprocessing as mp
 from random import randint
 
 class Taxi:
 	def __init__(self, base_price, min_price):
-		self.x = randint(-5,5)
-		self.y = randint(-5,5)
+		self.x = randint(0,4)
+		self.y = randint(0,4)
 		self.base_price = base_price
 		self.min_price = min_price
 
@@ -16,14 +16,15 @@ class Taxi:
 
 
 def taximain(base_price, min_price, num_cars):
-	taxi_datas = [Taxi(base_price, min_price) for i in range(num_cars)]
+	taxi_datas = [Taxi(base_price, min_price) for i in range(int(num_cars))]
 	[x.upload() for x in taxi_datas]
-
-	def taxi_running(taxi):
+	ids = [x.id for x in taxi_datas]
+	print(type(ids[0]))
+	
+	def taxi_running(id):
 		while True:
-			__, __, (x,y) = search_and_find_pair(taxi.id)
+			__, __, (x,y) = search_and_find_pair(id)
+			taxi_during_route(id, x, y)
 
-			taxi_during_route(taxiid, x, y)
-
-	with mp.Pool(num_cars) as p:
-		p.map(taxi_running,taxi_datas)
+	with mp.Pool(int(num_cars)) as p:
+		p.map(taxi_running,ids)

@@ -4,10 +4,11 @@ from blondie.token.scripts.blockchain_interaction import *
 
 class Match:
     
-    def __init__(data):
+    def __init__(self,data,taxis):
+        print(taxis)
         self.passenger_loc = (int(data['from'][1]),int(data['from'][3]))
         self.passenger_dest = (int(data['to'][1]),int(data['to'][3]))
-        self.cars_data = listofalltaxidata()
+        self.cars_data = taxis
         self.num_cars = len(self.cars_data)
         self.cars = pd.DataFrame(data=self.cars_data,
                                  index=['car' + str(i + 1) for i in range(self.num_cars)],
