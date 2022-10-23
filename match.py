@@ -1,16 +1,18 @@
 import pandas as pd
 from brookie.scripts.blockchain_interaction import *
+import taxidata.py
 
 class Match:
     
     def __init__():
         self.passenger_loc = (int(data['from'][1]),int(data['from'][3]))
         self.passenger_dest = (int(data['to'][1]),int(data['to'][3]))
-        self.cars = pd.DataFrame(data=[[0,1,2,1,1],[2,4,1,2,0],[1,0,1,2,1]],
-                                 index=['car1','car2','car3'],
+        self.cars_data = listofalltaxidata()
+        self.num_cars = len(self.cars_data)
+        self.cars = pd.DataFrame(data=self.cars_data,
+                                 index=['car' + str(i + 1) for i in range(self.num_cars)],
                                  columns=['X location', 'Y location', 'Base Price', 'Price/min', 'Available']
                                 )
-        # cars = readTaxi()
         
     def available(self):
         '''Filters out unavailable cars.'''
@@ -41,3 +43,11 @@ class Match:
             else:
                 pair(match.index[0])
         return
+
+''' 
+to do:
+return the addresses list
+journey cost
+estimated journey
+estimated time until pickup
+'''
