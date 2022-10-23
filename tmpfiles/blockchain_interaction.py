@@ -6,7 +6,7 @@ network.connect('matic_mumbai')
 print(network.is_connected())
 
 accounts.add('9fa44b230cadfd815b7d566708f3b2a2753ece818d0f94ef0caff79e75e68fab')
-SC = Contract('0x96aEd0aebDAc2C81643AA3bf18E216f75908399c', owner = accounts[0]) # do we need abi here too? ABI is just a 'list' thing of functions and events
+SC = Contract('0xad8CAf13d083DF9C30f5fb69214109Be42089d6c', owner = accounts[0]) # do we need abi here too? ABI is just a 'list' thing of functions and events
 
 
 
@@ -31,7 +31,34 @@ def find_taxis():
 
 
 def add_taxi(x,y,base_price, price_min):
-    SC.add_taxi(x,y,base_price,price_min)
+    taxi_id = SC.add_taxi(x,y,base_price,price_min)
+	return taxi_id
+
+def search_and_find_pair(taxi_id):
+	while True:
+		matched_bool = SC.check_for_pair(taxi_id)
+		if matched_bool:
+			break
+	passenger_address = SC.retrieve_passenger_address(taxi_id)
+	x_current = SC.retriever_x_current(taxi_id)
+	y_current = SC.retriever_y_current(taxi_id)
+	x_dest = SC.retriever_x_dest(taxi_id)
+	y_dest = SC.retriever_y_dest(taxi_id)
+
+
+	return passenger_address, (x_current, y_current), (x_dest, y_dest)
+
+def taxi_during_route(taxiid,x,y):
+	while True:
+		if SC.taxi_end_journey(taxiid, x, y):
+			break
+
+def passenger_end_journey(taxiid):
+	SC.passenger_end_journey(taxiid)
+
+	#Makes taxi available again
+
+
 #
 # def pair(car_id):
 #     receipt = SC.pair(car_id)
